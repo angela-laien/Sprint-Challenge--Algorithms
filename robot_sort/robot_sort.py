@@ -97,9 +97,42 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
 
+        # turn robot's light on before a round of sorting begins
+        self.set_light_on()
 
+        while self.light_is_on():
+            # turn the light off so the robot can move and start sorting 
+            self.set_light_off()
+            # when there is room for the robot to move right 
+            while self.can_move_right() == True:
+                # robot move right
+                self.move_right()
+                # compare the item the robot is holding to the item on the right
+                if self.compare_item() == 1:
+                    # if the item in robot's hand has a bigger value, swap it with the item on the right
+                    self.swap_item()
+                    # the robot's light turns on after one round of sorting is finished
+                    self.set_light_on()
+            # when there is room available for the robot to move left
+            while self.can_move_left() == True:
+                # pick up an item
+                self.swap_item()
+                # move left
+                self.move_left()
+                # compare the item the robot is holding to the item on the left
+                if self.compare_item() == -1:
+                    # if the item in robot's hand has a smaller value, swap it with the item on the left
+                    self.swap_item()
+                    # the robot's light turns on after one round of sorting is finished
+                    self.set_light_on()
+                # otherwise move right 
+                self.move_right()
+                # swap items
+                self.swap_item()
+                # move back to left
+                self.move_left()
+                
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
